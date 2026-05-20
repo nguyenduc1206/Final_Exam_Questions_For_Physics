@@ -1,0 +1,326 @@
+:root {
+  --primary: #1a2744;
+  --accent: #c8102e;
+  --light: #f5f7fa;
+  --border: #ccc;
+  --correct: #155724;
+  --correct-bg: #d4edda;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+  background: #e8eaf0;
+  color: #222;
+}
+
+/* NAV */
+.nav-bar {
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+}
+
+.nav-bar span {
+  color: #aac4ff;
+  font-size: 13px;
+  margin-right: 8px;
+  font-family: Arial;
+}
+
+.nav-btn {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 5px 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: Arial;
+  transition: background 0.2s;
+}
+
+.nav-btn:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.nav-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.print-btn {
+  margin-left: auto;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  padding: 6px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: Arial;
+}
+
+.print-btn:hover {
+  background: #388e3c;
+}
+
+/* EXAM CONTAINER */
+.exam-section {
+  display: none;
+}
+
+.exam-section.active {
+  display: block;
+}
+
+.exam-page {
+  max-width: 900px;
+  margin: 24px auto;
+  background: #fff;
+  border: 1px solid #bbb;
+  padding: 32px 40px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+/* HEADER TABLE */
+.header-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #222;
+  margin-bottom: 16px;
+}
+
+.header-table td {
+  border: 1px solid #222;
+  padding: 6px 10px;
+  vertical-align: top;
+  font-size: 13px;
+}
+
+.header-table td:first-child {
+  width: 50%;
+}
+
+.school-name {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.exam-title {
+  font-weight: bold;
+  font-size: 15px;
+  text-align: center;
+}
+
+.de-so {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0 16px;
+  letter-spacing: 1px;
+}
+
+.note-box {
+  border: 1px dashed #888;
+  padding: 6px 12px;
+  font-style: italic;
+  font-size: 12.5px;
+  margin-bottom: 16px;
+  background: #fafafa;
+}
+
+/* PARTS */
+.part-title {
+  font-weight: bold;
+  font-size: 14.5px;
+  background: var(--primary);
+  color: #fff;
+  padding: 5px 14px;
+  margin: 18px 0 12px;
+  border-radius: 2px;
+}
+
+/* QUESTIONS */
+.question {
+  margin-bottom: 14px;
+  padding-left: 4px;
+}
+
+.question-text {
+  font-weight: bold;
+  margin-bottom: 5px;
+  line-height: 1.55;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 24px;
+  padding-left: 12px;
+}
+
+.option {
+  line-height: 1.5;
+}
+
+.option span {
+  font-weight: bold;
+}
+
+/* ESSAY */
+.essay-q {
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.essay-q .q-header {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.essay-q .sub-q {
+  margin-left: 20px;
+}
+
+/* ANSWER KEY */
+.answer-section {
+  max-width: 900px;
+  margin: 0 auto 30px;
+  background: var(--correct-bg);
+  border: 1.5px solid #28a745;
+  border-radius: 6px;
+  padding: 18px 28px;
+}
+
+.answer-toggle {
+  background: var(--correct);
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: Arial;
+  width: 100%;
+  text-align: left;
+  margin-top: 8px;
+}
+
+.answer-content {
+  display: none;
+  margin-top: 14px;
+}
+
+.answer-content.show {
+  display: block;
+}
+
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px 8px;
+  margin-bottom: 12px;
+}
+
+.ans-item {
+  background: #fff;
+  border: 1px solid #28a745;
+  border-radius: 3px;
+  padding: 3px 6px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.ans-item strong {
+  color: var(--accent);
+}
+
+.essay-ans {
+  margin-top: 12px;
+}
+
+.essay-ans h4 {
+  font-size: 13.5px;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.essay-ans p {
+  font-size: 13px;
+  margin-bottom: 4px;
+  line-height: 1.6;
+}
+
+sup {
+  font-size: 10px;
+}
+
+sub {
+  font-size: 10px;
+}
+
+hr.section-divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+.footer-sig {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: #555;
+}
+
+.sig-box {
+  text-align: center;
+  width: 45%;
+}
+
+.sig-box p {
+  font-style: italic;
+}
+
+.sig-line {
+  border-top: 1px solid #999;
+  margin-top: 40px;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+  
+  .nav-bar, .print-btn, .answer-section, .answer-toggle {
+    display: none !important;
+  }
+  
+  .exam-section {
+    display: block !important;
+  }
+  
+  .exam-page {
+    box-shadow: none;
+    border: none;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .exam-section:not(:first-child) .exam-page {
+    page-break-before: always;
+  }
+}
