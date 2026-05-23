@@ -4,7 +4,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Đề Thi Thử Vật Lý Ứng Dụng - Đề 3 đến 7</title>
-<link rel="stylesheet" href="styles.css">
+<style>
+  :root {
+    --primary: #1a2744;
+    --accent: #c8102e;
+    --light: #f5f7fa;
+    --border: #ccc;
+    --correct: #155724;
+    --correct-bg: #d4edda;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    background: #e8eaf0;
+    color: #222;
+  }
+  /* NAV */
+  .nav-bar {
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-wrap: wrap;
+  }
+  .nav-bar span { color: #aac4ff; font-size: 13px; margin-right: 8px; font-family: Arial; }
+  .nav-btn {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 5px 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: Arial;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.25); }
+  .nav-btn.active { background: var(--accent); border-color: var(--accent); }
+  .print-btn {
+    margin-left: auto;
+    background: #2e7d32;
+    color: #fff;
+    border: none;
+    padding: 6px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: Arial;
+  }
+  .print-btn:hover { background: #388e3c; }
+
+  /* EXAM CONTAINER */
+  .exam-section { display: none; }
+  .exam-section.active { display: block; }
+  .exam-page {
+    max-width: 900px;
+    margin: 24px auto;
+    background: #fff;
+    border: 1px solid #bbb;
+    padding: 32px 40px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  }
+  /* HEADER TABLE */
+  .header-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1.5px solid #222;
+    margin-bottom: 16px;
+  }
+  .header-table td {
+    border: 1px solid #222;
+    padding: 6px 10px;
+    vertical-align: top;
+    font-size: 13px;
+  }
+  .header-table td:first-child { width: 50%; }
+  .school-name { font-weight: bold; font-size: 13px; }
+  .exam-title { font-weight: bold; font-size: 15px; text-align: center; }
+  .de-so { font-size: 18px; font-weight: bold; text-align: center; margin: 10px 0 16px; letter-spacing: 1px; }
+  .note-box {
+    border: 1px dashed #888;
+    padding: 6px 12px;
+    font-style: italic;
+    font-size: 12.5px;
+    margin-bottom: 16px;
+    background: #fafafa;
+  }
+  /* PARTS */
+  .part-title {
+    font-weight: bold;
+    font-size: 14.5px;
+    background: var(--primary);
+    color: #fff;
+    padding: 5px 14px;
+    margin: 18px 0 12px;
+    border-radius: 2px;
+  }
+  /* QUESTIONS */
+  .question {
+    margin-bottom: 14px;
+    padding-left: 4px;
+  }
+  .question-text {
+    font-weight: bold;
+    margin-bottom: 5px;
+    line-height: 1.55;
+  }
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 24px;
+    padding-left: 12px;
+  }
+  .option { line-height: 1.5; }
+  .option span { font-weight: bold; }
+  /* ESSAY */
+  .essay-q {
+    margin-bottom: 18px;
+    line-height: 1.6;
+  }
+  .essay-q .q-header { font-weight: bold; font-size: 14px; }
+  .essay-q .sub-q { margin-left: 20px; }
+  /* ANSWER KEY */
+  .answer-section {
+    max-width: 900px;
+    margin: 0 auto 30px;
+    background: var(--correct-bg);
+    border: 1.5px solid #28a745;
+    border-radius: 6px;
+    padding: 18px 28px;
+  }
+  .answer-toggle {
+    background: var(--correct);
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: Arial;
+    width: 100%;
+    text-align: left;
+    margin-top: 8px;
+  }
+  .answer-content { display: none; margin-top: 14px; }
+  .answer-content.show { display: block; }
+  .answer-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px 8px;
+    margin-bottom: 12px;
+  }
+  .ans-item {
+    background: #fff;
+    border: 1px solid #28a745;
+    border-radius: 3px;
+    padding: 3px 6px;
+    font-size: 13px;
+    text-align: center;
+  }
+  .ans-item strong { color: var(--accent); }
+  .essay-ans { margin-top: 12px; }
+  .essay-ans h4 { font-size: 13.5px; color: var(--primary); margin-bottom: 6px; }
+  .essay-ans p { font-size: 13px; margin-bottom: 4px; line-height: 1.6; }
+  sup { font-size: 10px; }
+  sub { font-size: 10px; }
+  hr.section-divider { border: none; border-top: 1px solid #ccc; margin: 20px 0; }
+  .footer-sig {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: #555;
+  }
+  .sig-box { text-align: center; width: 45%; }
+  .sig-box p { font-style: italic; }
+  .sig-line { border-top: 1px solid #999; margin-top: 40px; }
+  @media print {
+    body { background: #fff; }
+    .nav-bar, .print-btn, .answer-section, .answer-toggle { display: none !important; }
+    .exam-section { display: block !important; }
+    .exam-page { box-shadow: none; border: none; margin: 0; padding: 20px; }
+    .exam-section:not(:first-child) .exam-page { page-break-before: always; }
+  }
+</style>
 </head>
 <body>
 
@@ -265,8 +453,504 @@
 </div>
 </div><!-- end exam3 -->
 
-<!-- Additional exam sections (4, 5, 6, 7) would go here in full implementation -->
+<!-- ═══════════════════════════ ĐỀ 4 ═══════════════════════════ -->
+<div class="exam-section" id="exam4">
+<div class="exam-page">
+  <table class="header-table">
+    <tr>
+      <td><span class="school-name">HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG<br>KHOA: CƠ BẢN 2</span></td>
+      <td><div class="exam-title">ĐỀ THI KẾT THÚC HỌC PHẦN<br>(Hình thức thi viết)</div><div style="font-size:12.5px">Kỳ thi: Học kỳ 2 | Năm học: 2025–2026</div></td>
+    </tr>
+    <tr>
+      <td>Học phần: <strong>Vật lý ứng dụng</strong> | Mã HP: BAS1270 | Thời gian: <strong>90 phút</strong></td>
+      <td>Trình độ: <strong>Đại học</strong> | Hình thức: <strong>Chính quy</strong></td>
+    </tr>
+  </table>
+  <div class="de-so">ĐỀ SỐ: 04</div>
+  <div class="note-box">Sinh viên không được sử dụng tài liệu. Cán bộ coi thi không giải thích gì thêm.</div>
 
-<script src="script.js"></script>
+  <div class="part-title">PHẦN I. TRẮC NGHIỆM (3 điểm) [CLO1]</div>
+
+  <div class="question">
+    <div class="question-text">Câu 1. Quả cầu đặc đồng chất đường kính d = 10 cm, khối lượng m = 2 kg, lăn không trượt trên mặt phẳng nằm ngang với vận tốc v = 2 m/s. Động năng toàn phần của quả cầu là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 5,6 J</div><div class="option"><span>B.</span> 4,0 J</div>
+      <div class="option"><span>C.</span> 8,0 J</div><div class="option"><span>D.</span> 2,8 J</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 2. Điện tích q = 5×10<sup>−8</sup> C cách sợi dây dài vô hạn tích điện đều r<sub>1</sub> = 4 cm, dịch chuyển đến r<sub>2</sub> = 2 cm dưới tác dụng của điện trường, thực hiện công A = 3×10<sup>−6</sup> J. ε = 1, ε<sub>0</sub> = 8,86×10<sup>−12</sup>. Mật độ điện dài τ của dây là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 9,64×10<sup>−9</sup> C/m</div><div class="option"><span>B.</span> 2,41×10<sup>−9</sup> C/m</div>
+      <div class="option"><span>C.</span> 4,82×10<sup>−9</sup> C/m</div><div class="option"><span>D.</span> 1,93×10<sup>−8</sup> C/m</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 3. Hai điện tích q<sub>1</sub> = q<sub>2</sub> = q > 0 đặt tại A và B cách nhau 12 cm. Điểm M trên đường trung trực AB, cách AB đoạn r. Để E tại M đạt cực đại, r bằng:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 2,12 cm</div><div class="option"><span>B.</span> 6,00 cm</div>
+      <div class="option"><span>C.</span> 8,49 cm</div><div class="option"><span>D.</span> 4,24 cm</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 4. Vòng dây tích điện đều Q = 3×10<sup>−9</sup> C, bán kính R = 6 cm. Cường độ điện trường tại điểm M trên trục, cách tâm h = 8 cm (ε = 1, k = 9×10<sup>9</sup>) là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 1080 V/m</div><div class="option"><span>B.</span> 2160 V/m</div>
+      <div class="option"><span>C.</span> 3240 V/m</div><div class="option"><span>D.</span> 720 V/m</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 5. Viên đạn m = 10 g, v<sub>0</sub> = 400 m/s xuyên vào gỗ dày, dừng sau d = 8 cm. Lực cản trung bình và vận tốc sau khi xuyên qua gỗ dày 4 cm là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 10000 N ; 283 m/s</div><div class="option"><span>B.</span> 1000 N ; 283 m/s</div>
+      <div class="option"><span>C.</span> 10000 N ; 566 m/s</div><div class="option"><span>D.</span> 1000 N ; 566 m/s</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 6. Vòng dây bán kính R = 3 cm, B = 0,5 T, mặt phẳng ⊥ B, điện trở R<sub>đ</sub> = 1 Ω. Điện lượng qua vòng khi quay 90° là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 7,07×10<sup>−4</sup> C</div><div class="option"><span>B.</span> 1,41×10<sup>−2</sup> C</div>
+      <div class="option"><span>C.</span> 7,07×10<sup>−3</sup> C</div><div class="option"><span>D.</span> 1,41×10<sup>−3</sup> C</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 7. Mật độ năng lượng điện trường sát mặt phẳng vô hạn tích điện đều: σ = 3×10<sup>−5</sup> C/m<sup>2</sup>, ε = 4 (ε<sub>0</sub> = 8,86×10<sup>−12</sup>):</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 1,59 J/m<sup>3</sup></div><div class="option"><span>B.</span> 3,17 J/m<sup>3</sup></div>
+      <div class="option"><span>C.</span> 6,35 J/m<sup>3</sup></div><div class="option"><span>D.</span> 0,79 J/m<sup>3</sup></div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 8. Quả cầu kim loại R = 8 cm, q = 4×10<sup>−8</sup> C, đặt trong không khí. E tại điểm M cách tâm 12 cm (k = 9×10<sup>9</sup>) là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 5,0×10<sup>4</sup> V/m</div><div class="option"><span>B.</span> 1,25×10<sup>4</sup> V/m</div>
+      <div class="option"><span>C.</span> 2,5×10<sup>4</sup> V/m</div><div class="option"><span>D.</span> 1,0×10<sup>4</sup> V/m</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 9. Từ đỉnh tháp H = 20 m, ném đá với v<sub>0</sub> = 15 m/s, α = 45°, g = 10 m/s<sup>2</sup>. Độ cao cực đại so với mặt đất là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 25,6 m</div><div class="option"><span>B.</span> 20,0 m</div>
+      <div class="option"><span>C.</span> 30,0 m</div><div class="option"><span>D.</span> 5,6 m</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 10. Bánh xe I = 50 kg.m<sup>2</sup>, M<sub>dẫn</sub> = 1000 N.m, chậm dần với ε = 4 rad/s<sup>2</sup>. Lực mỗi má phanh trên vành R = 0,5 m (μ = 0,3) là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 2000 N</div><div class="option"><span>B.</span> 8000 N</div>
+      <div class="option"><span>C.</span> 400 N</div><div class="option"><span>D.</span> 4000 N</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 11. Khi dI/dt = 500 A/s thì ξ<sub>tc</sub> = 0,25 V. Hệ số tự cảm L là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 5 mH</div><div class="option"><span>B.</span> 0,5 mH</div>
+      <div class="option"><span>C.</span> 50 μH</div><div class="option"><span>D.</span> 5 H</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 12. Tụ phẳng d = 4 mm, U = 600 V (không khí). Ngắt nguồn, lấp đầy ε = 6. σ tự do và σ' liên kết là (ε<sub>0</sub> = 8,86×10<sup>−12</sup>):</div>
+    <div class="options">
+      <div class="option"><span>A.</span> σ = 1,33 μC/m<sup>2</sup> ; σ' = 1,11 μC/m<sup>2</sup></div>
+      <div class="option"><span>B.</span> σ = 2,66 μC/m<sup>2</sup> ; σ' = 1,11 μC/m<sup>2</sup></div>
+      <div class="option"><span>C.</span> σ = 1,33 μC/m<sup>2</sup> ; σ' = 0,22 μC/m<sup>2</sup></div>
+      <div class="option"><span>D.</span> σ = 0,66 μC/m<sup>2</sup> ; σ' = 0,55 μC/m<sup>2</sup></div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 13. Dây dẫn thẳng dài vô hạn, I = 10 A. Cường độ từ trường H tại điểm M cách dây 3 cm là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 26,5 A/m</div><div class="option"><span>B.</span> 106,2 A/m</div>
+      <div class="option"><span>C.</span> 53,1 A/m</div><div class="option"><span>D.</span> 212,4 A/m</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 14. Khung dây hình vuông, cạnh a = 20 cm, dòng điện I = 5 A (chân không, μ<sub>0</sub> = 4π×10<sup>−7</sup>). Cảm ứng từ tại tâm khung là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 1,41×10<sup>−5</sup> T</div><div class="option"><span>B.</span> 5,66×10<sup>−5</sup> T</div>
+      <div class="option"><span>C.</span> 4,45×10<sup>−5</sup> T</div><div class="option"><span>D.</span> 2,83×10<sup>−5</sup> T</div>
+    </div>
+  </div>
+
+  <div class="question">
+    <div class="question-text">Câu 15. Hai điện tích cùng dấu q<sub>1</sub> = 3×10<sup>−7</sup> C, q<sub>2</sub> = 5×10<sup>−7</sup> C, cách nhau r<sub>1</sub> = 50 cm. Công cần thiết để đưa lại gần đến r<sub>2</sub> = 10 cm (k = 9×10<sup>9</sup>) là:</div>
+    <div class="options">
+      <div class="option"><span>A.</span> 5,4×10<sup>−3</sup> J</div><div class="option"><span>B.</span> 1,08×10<sup>−2</sup> J</div>
+      <div class="option"><span>C.</span> 2,16×10<sup>−2</sup> J</div><div class="option"><span>D.</span> 2,7×10<sup>−3</sup> J</div>
+    </div>
+  </div>
+
+  <div class="part-title">PHẦN II. TỰ LUẬN (7 điểm) [CLO2]</div>
+
+  <div class="essay-q"><p class="q-header">Câu 1. (1,5 điểm)</p>
+    <p>Mạch dao động: C = 0,5 μF, L = 2×10<sup>−2</sup> H, R = 3 Ω.</p>
+    <p class="sub-q">a) Chu kỳ và lượng giảm logarithm. (1,0 đ)</p>
+    <p class="sub-q">b) Thời gian để biên độ hiệu điện thế giảm 3 lần. (0,5 đ)</p>
+  </div>
+  <div class="essay-q"><p class="q-header">Câu 2. (1,5 điểm)</p>
+    <p>Hai khe Young: a = 2 mm, λ = 0,48 μm, D = 1 m.</p>
+    <p class="sub-q">a) Vân sáng thứ 3 và vân tối thứ 4. (1,0 đ)</p>
+    <p class="sub-q">b) Đặt bản mỏng n = 1,6 trước một khe, hệ vân dịch 0,96 mm. Tìm bề dày bản mỏng. (0,5 đ)</p>
+  </div>
+  <div class="essay-q"><p class="q-header">Câu 3. (1,0 điểm)</p>
+    <p>A = 1,8 eV. Tìm: a) λ<sub>0</sub>. &nbsp; b) U<sub>h</sub> khi chiếu λ = 0,55 μm (h = 6,625×10<sup>−34</sup> J.s, c = 3×10<sup>8</sup> m/s).</p>
+  </div>
+  <div class="essay-q"><p class="q-header">Câu 4. (1,0 điểm)</p>
+    <p>Tàu chuyển động v = 0,8c. Hệ quy chiếu tàu: Δt<sub>0</sub> = 3 s, l<sub>0</sub> = 150 m. Tính: a) Δt ; b) l ; c) Động năng tương đối tính (m<sub>0</sub>).</p>
+  </div>
+  <div class="essay-q"><p class="q-header">Câu 5. (1,0 điểm)</p>
+    <p>Tụ phẳng: d = 6 mm, S = 120 cm<sup>2</sup>, U = 180 V. Ngắt nguồn, lấp êbônit ε = 3. Tính mật độ điện tích liên kết trên mặt êbônit. (ε<sub>0</sub> = 8,86×10<sup>−12</sup>)</p>
+  </div>
+  <div class="essay-q"><p class="q-header">Câu 6. (1,0 điểm)</p>
+    <p>Điện tử tăng tốc bởi U = 2000 V, bay vào từ trường đều B = 10<sup>−3</sup> T vuông góc. (e = 1,6×10<sup>−19</sup> C, m<sub>e</sub> = 9,1×10<sup>−31</sup> kg). Bán kính quỹ đạo?</p>
+  </div>
+
+  <hr class="section-divider">
+  <div class="footer-sig">
+    <div class="sig-box"><p>TRƯỞNG BỘ MÔN DUYỆT ĐỀ</p><p><em>(ký và ghi rõ họ tên)</em></p><div class="sig-line"></div></div>
+    <div class="sig-box"><p>GIẢNG VIÊN RA ĐỀ</p><p><em>(ký và ghi rõ họ tên)</em></p><div class="sig-line"></div></div>
+  </div>
+</div>
+<div class="answer-section" id="ans4">
+  <button class="answer-toggle" onclick="toggleAns('ans4-content')">📋 ĐÁP ÁN ĐỀ 4 — Nhấn để xem / ẩn</button>
+  <div class="answer-content" id="ans4-content">
+    <h4 style="margin-bottom:8px;color:#155724">Phần I – Trắc nghiệm:</h4>
+    <div class="answer-grid">
+      <div class="ans-item">C1: <strong>A</strong></div><div class="ans-item">C2: <strong>C</strong></div>
+      <div class="ans-item">C3: <strong>D</strong></div><div class="ans-item">C4: <strong>B</strong></div>
+      <div class="ans-item">C5: <strong>A</strong></div><div class="ans-item">C6: <strong>D</strong></div>
+      <div class="ans-item">C7: <strong>B</strong></div><div class="ans-item">C8: <strong>C</strong></div>
+      <div class="ans-item">C9: <strong>A</strong></div><div class="ans-item">C10: <strong>D</strong></div>
+      <div class="ans-item">C11: <strong>B</strong></div><div class="ans-item">C12: <strong>A</strong></div>
+      <div class="ans-item">C13: <strong>C</strong></div><div class="ans-item">C14: <strong>D</strong></div>
+      <div class="ans-item">C15: <strong>B</strong></div>
+    </div>
+    <div class="essay-ans">
+      <h4>Phần II – Gợi ý tự luận:</h4>
+      <p><strong>C1:</strong> T = 6,28×10⁻⁴ s ; δ ≈ 0,0471 ; t(giảm 3 lần) = 2L·ln3/R ≈ 14,7 ms</p>
+      <p><strong>C2:</strong> i = 0,24 mm ; VS₃: 0,72 mm ; VT₄: 0,84 mm ; e ≈ 3,2 μm</p>
+      <p><strong>C3:</strong> λ₀ = 0,691 μm ; U<sub>h</sub> ≈ 0,46 V</p>
+      <p><strong>C4:</strong> γ = 5/3 ; Δt = 5 s ; l = 90 m ; W<sub>k</sub> = (2/3)m₀c²</p>
+      <p><strong>C5:</strong> σ' = ε₀U(ε−1)/(ε·d) ≈ 1,77×10⁻⁷ C/m²</p>
+      <p><strong>C6:</strong> v ≈ 2,65×10⁷ m/s ; r ≈ 15,1 cm</p>
+    </div>
+  </div>
+</div>
+</div><!-- end exam4 -->
+
+<!-- ═══════════════════════════ ĐỀ 5 ═══════════════════════════ -->
+<div class="exam-section" id="exam5">
+<div class="exam-page">
+  <table class="header-table"><tr><td><span class="school-name">HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG<br>KHOA: CƠ BẢN 2</span></td><td><div class="exam-title">ĐỀ THI KẾT THÚC HỌC PHẦN<br>(Hình thức thi viết)</div><div style="font-size:12.5px">Kỳ thi: HK2 | 2025–2026</div></td></tr><tr><td>HP: <strong>Vật lý ứng dụng</strong> | BAS1270 | <strong>90 phút</strong></td><td>ĐH Chính quy</td></tr></table>
+  <div class="de-so">ĐỀ SỐ: 05</div>
+  <div class="note-box">Sinh viên không được sử dụng tài liệu. Cán bộ coi thi không giải thích gì thêm.</div>
+  <div class="part-title">PHẦN I. TRẮC NGHIỆM (3 điểm) [CLO1]</div>
+
+  <div class="question"><div class="question-text">Câu 1. Đĩa đặc đồng chất bán kính R = 20 cm, khối lượng m = 4 kg, lăn không trượt với v = 3 m/s. Động năng toàn phần của đĩa là:</div>
+  <div class="options"><div class="option"><span>A.</span> 18 J</div><div class="option"><span>B.</span> 9 J</div><div class="option"><span>C.</span> 27 J</div><div class="option"><span>D.</span> 36 J</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 2. Điện tích q = 3×10<sup>−8</sup> C cách dây tích điện đều r<sub>1</sub> = 6 cm, dịch chuyển đến r<sub>2</sub> = 2 cm, điện trường thực hiện công A = 6×10<sup>−6</sup> J. ε = 1. Tính τ của dây:</div>
+  <div class="options"><div class="option"><span>A.</span> 1,01×10<sup>−8</sup> C/m</div><div class="option"><span>B.</span> 2,02×10<sup>−8</sup> C/m</div><div class="option"><span>C.</span> 5,05×10<sup>−9</sup> C/m</div><div class="option"><span>D.</span> 4,04×10<sup>−8</sup> C/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 3. Hai điện tích q<sub>1</sub> = q<sub>2</sub> > 0 đặt tại A, B cách nhau 10 cm. Vị trí M trên đường trung trực, cách AB khoảng r, để E cực đại là:</div>
+  <div class="options"><div class="option"><span>A.</span> 7,07 cm</div><div class="option"><span>B.</span> 5,00 cm</div><div class="option"><span>C.</span> 1,77 cm</div><div class="option"><span>D.</span> 3,54 cm</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 4. Vòng dây tích điện Q = 4×10<sup>−9</sup> C, R = 12 cm. E tại M trên trục cách tâm h = 16 cm (ε = 1, k = 9×10<sup>9</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 1440 V/m</div><div class="option"><span>B.</span> 720 V/m</div><div class="option"><span>C.</span> 360 V/m</div><div class="option"><span>D.</span> 240 V/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 5. Đạn m = 20 g, v<sub>0</sub> = 500 m/s dừng sau d = 5 cm trong gỗ. Lực cản và vận tốc sau khi qua gỗ dày 2,5 cm là:</div>
+  <div class="options"><div class="option"><span>A.</span> 5×10<sup>3</sup> N ; 354 m/s</div><div class="option"><span>B.</span> 5×10<sup>4</sup> N ; 707 m/s</div><div class="option"><span>C.</span> 5×10<sup>4</sup> N ; 354 m/s</div><div class="option"><span>D.</span> 5×10<sup>3</sup> N ; 707 m/s</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 6. Vòng dây R = 4 cm, B = 0,4 T, mặt phẳng ⊥ B, R<sub>đ</sub> = 0,5 Ω. Điện lượng qua vòng khi quay 90° là:</div>
+  <div class="options"><div class="option"><span>A.</span> 4,02×10<sup>−3</sup> C</div><div class="option"><span>B.</span> 2,01×10<sup>−3</sup> C</div><div class="option"><span>C.</span> 4,02×10<sup>−2</sup> C</div><div class="option"><span>D.</span> 2,01×10<sup>−4</sup> C</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 7. Mật độ năng lượng điện trường sát mặt phẳng tích điện: σ = 10<sup>−5</sup> C/m<sup>2</sup>, ε = 2 (ε<sub>0</sub> = 8,86×10<sup>−12</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 0,353 J/m<sup>3</sup></div><div class="option"><span>B.</span> 1,41 J/m<sup>3</sup></div><div class="option"><span>C.</span> 0,177 J/m<sup>3</sup></div><div class="option"><span>D.</span> 0,706 J/m<sup>3</sup></div></div></div>
+
+  <div class="question"><div class="question-text">Câu 8. Quả cầu kim loại R = 10 cm, q = 5×10<sup>−8</sup> C. E tại M cách tâm 30 cm (k = 9×10<sup>9</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 10,0×10<sup>3</sup> V/m</div><div class="option"><span>B.</span> 5,0×10<sup>3</sup> V/m</div><div class="option"><span>C.</span> 2,5×10<sup>3</sup> V/m</div><div class="option"><span>D.</span> 1,0×10<sup>3</sup> V/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 9. Đỉnh tháp H = 10 m, ném đá v<sub>0</sub> = 25 m/s, α = 60°, g = 10 m/s<sup>2</sup>. Độ cao cực đại so với mặt đất là:</div>
+  <div class="options"><div class="option"><span>A.</span> 23,4 m</div><div class="option"><span>B.</span> 43,4 m</div><div class="option"><span>C.</span> 33,4 m</div><div class="option"><span>D.</span> 10,0 m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 10. Bánh xe I = 60 kg.m<sup>2</sup>, M<sub>dẫn</sub> = 800 N.m, ε = 2,5 rad/s<sup>2</sup>, μ = 0,25, R = 0,8 m. Lực mỗi má phanh là:</div>
+  <div class="options"><div class="option"><span>A.</span> 2375 N</div><div class="option"><span>B.</span> 1188 N</div><div class="option"><span>C.</span> 4750 N</div><div class="option"><span>D.</span> 475 N</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 11. dI/dt = 1000 A/s, ξ<sub>tc</sub> = 2 V. Hệ số tự cảm L là:</div>
+  <div class="options"><div class="option"><span>A.</span> 20 mH</div><div class="option"><span>B.</span> 200 μH</div><div class="option"><span>C.</span> 2 H</div><div class="option"><span>D.</span> 2 mH</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 12. Tụ phẳng d = 5 mm, U = 1200 V (không khí). Ngắt nguồn, lấp đầy ε = 4 (ε<sub>0</sub> = 8,86×10<sup>−12</sup>). σ tự do và σ' liên kết là:</div>
+  <div class="options">
+    <div class="option"><span>A.</span> σ = 2,13 μC/m<sup>2</sup> ; σ' = 0,53 μC/m<sup>2</sup></div>
+    <div class="option"><span>B.</span> σ = 2,13 μC/m<sup>2</sup> ; σ' = 1,60 μC/m<sup>2</sup></div>
+    <div class="option"><span>C.</span> σ = 4,25 μC/m<sup>2</sup> ; σ' = 1,60 μC/m<sup>2</sup></div>
+    <div class="option"><span>D.</span> σ = 1,06 μC/m<sup>2</sup> ; σ' = 0,80 μC/m<sup>2</sup></div>
+  </div></div>
+
+  <div class="question"><div class="question-text">Câu 13. Dây dẫn thẳng dài vô hạn, I = 6 A. H tại M cách dây 2 cm là:</div>
+  <div class="options"><div class="option"><span>A.</span> 95,5 A/m</div><div class="option"><span>B.</span> 23,9 A/m</div><div class="option"><span>C.</span> 47,7 A/m</div><div class="option"><span>D.</span> 191 A/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 14. Khung hình vuông cạnh a = 10 cm, I = 8 A (chân không, μ<sub>0</sub> = 4π×10<sup>−7</sup>). B tại tâm khung là:</div>
+  <div class="options"><div class="option"><span>A.</span> 9,05×10<sup>−5</sup> T</div><div class="option"><span>B.</span> 4,52×10<sup>−5</sup> T</div><div class="option"><span>C.</span> 1,81×10<sup>−4</sup> T</div><div class="option"><span>D.</span> 1,80×10<sup>−5</sup> T</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 15. q<sub>1</sub> = 4×10<sup>−7</sup> C, q<sub>2</sub> = 6×10<sup>−7</sup> C, r<sub>1</sub> = 80 cm. Công để đưa đến r<sub>2</sub> = 20 cm (k = 9×10<sup>9</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 4,05×10<sup>−3</sup> J</div><div class="option"><span>B.</span> 1,62×10<sup>−2</sup> J</div><div class="option"><span>C.</span> 2,03×10<sup>−3</sup> J</div><div class="option"><span>D.</span> 8,1×10<sup>−3</sup> J</div></div></div>
+
+  <div class="part-title">PHẦN II. TỰ LUẬN (7 điểm) [CLO2]</div>
+  <div class="essay-q"><p class="q-header">Câu 1. (1,5 điểm)</p><p>Mạch dao động: C = 1 μF, L = 10<sup>−2</sup> H, R = 4 Ω. a) Chu kỳ và lượng giảm logarithm. b) Thời gian biên độ U giảm 5 lần.</p></div>
+  <div class="essay-q"><p class="q-header">Câu 2. (1,5 điểm)</p><p>Hai khe Young: a = 1,5 mm, λ = 0,589 μm, D = 1,2 m. a) Vân sáng thứ 5 và vân tối thứ 3. b) Đặt bản mỏng n = 1,5, hệ vân dịch 2 mm. Bề dày bản mỏng?</p></div>
+  <div class="essay-q"><p class="q-header">Câu 3. (1,0 điểm)</p><p>A = 2,5 eV. Tìm: a) λ<sub>0</sub>. b) U<sub>h</sub> khi chiếu λ = 0,4 μm (h = 6,625×10<sup>−34</sup> J.s, c = 3×10<sup>8</sup> m/s).</p></div>
+  <div class="essay-q"><p class="q-header">Câu 4. (1,0 điểm)</p><p>Tàu chuyển động v = 0,9c. Hệ tàu: Δt<sub>0</sub> = 2 s, l<sub>0</sub> = 90 m. a) Δt ; b) l ; c) Động năng tương đối tính (m<sub>0</sub>).</p></div>
+  <div class="essay-q"><p class="q-header">Câu 5. (1,0 điểm)</p><p>Tụ phẳng: d = 3 mm, S = 50 cm<sup>2</sup>, U = 100 V. Ngắt nguồn, lấp êbônit ε = 6 (ε<sub>0</sub> = 8,86×10<sup>−12</sup>). Mật độ điện tích liên kết?</p></div>
+  <div class="essay-q"><p class="q-header">Câu 6. (1,0 điểm)</p><p>Điện tử tăng tốc U = 1500 V, vào từ trường B = 1,5×10<sup>−3</sup> T vuông góc. Bán kính quỹ đạo? (e = 1,6×10<sup>−19</sup> C, m<sub>e</sub> = 9,1×10<sup>−31</sup> kg)</p></div>
+
+  <hr class="section-divider">
+  <div class="footer-sig"><div class="sig-box"><p>TRƯỞNG BỘ MÔN DUYỆT ĐỀ</p><p><em>(ký và ghi rõ họ tên)</em></p><div class="sig-line"></div></div><div class="sig-box"><p>GIẢNG VIÊN RA ĐỀ</p><p><em>(ký và ghi rõ họ tên)</em></p><div class="sig-line"></div></div></div>
+</div>
+<div class="answer-section" id="ans5">
+  <button class="answer-toggle" onclick="toggleAns('ans5-content')">📋 ĐÁP ÁN ĐỀ 5 — Nhấn để xem / ẩn</button>
+  <div class="answer-content" id="ans5-content">
+    <h4 style="margin-bottom:8px;color:#155724">Phần I – Trắc nghiệm:</h4>
+    <div class="answer-grid">
+      <div class="ans-item">C1: <strong>C</strong></div><div class="ans-item">C2: <strong>A</strong></div>
+      <div class="ans-item">C3: <strong>D</strong></div><div class="ans-item">C4: <strong>B</strong></div>
+      <div class="ans-item">C5: <strong>C</strong></div><div class="ans-item">C6: <strong>A</strong></div>
+      <div class="ans-item">C7: <strong>D</strong></div><div class="ans-item">C8: <strong>B</strong></div>
+      <div class="ans-item">C9: <strong>C</strong></div><div class="ans-item">C10: <strong>A</strong></div>
+      <div class="ans-item">C11: <strong>D</strong></div><div class="ans-item">C12: <strong>B</strong></div>
+      <div class="ans-item">C13: <strong>C</strong></div><div class="ans-item">C14: <strong>A</strong></div>
+      <div class="ans-item">C15: <strong>D</strong></div>
+    </div>
+    <div class="essay-ans">
+      <h4>Phần II – Gợi ý tự luận:</h4>
+      <p><strong>C1:</strong> T = 6,28×10⁻⁴ s ; δ ≈ 0,1256 ; t(giảm 5 lần) = 2L·ln5/R ≈ 8,0 ms</p>
+      <p><strong>C2:</strong> i = 0,471 mm ; VS₅ = 2,36 mm ; VT₃ = 1,18 mm ; e ≈ 5,0 μm</p>
+      <p><strong>C3:</strong> λ₀ = 0,497 μm ; U<sub>h</sub> ≈ 0,61 V</p>
+      <p><strong>C4:</strong> γ ≈ 2,294 ; Δt ≈ 4,59 s ; l ≈ 39,2 m ; W<sub>k</sub> = 1,294·m₀c²</p>
+      <p><strong>C5:</strong> σ' = ε₀U(ε−1)/(ε·d) ≈ 2,46×10⁻⁷ C/m²</p>
+      <p><strong>C6:</strong> v ≈ 2,30×10⁷ m/s ; r ≈ 8,71 cm</p>
+    </div>
+  </div>
+</div>
+</div><!-- end exam5 -->
+
+<!-- ═══════════════════════════ ĐỀ 6 ═══════════════════════════ -->
+<div class="exam-section" id="exam6">
+<div class="exam-page">
+  <table class="header-table"><tr><td><span class="school-name">HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG<br>KHOA: CƠ BẢN 2</span></td><td><div class="exam-title">ĐỀ THI KẾT THÚC HỌC PHẦN<br>(Hình thức thi viết)</div><div style="font-size:12.5px">HK2 | 2025–2026</div></td></tr><tr><td>HP: <strong>Vật lý ứng dụng</strong> | BAS1270 | <strong>90 phút</strong></td><td>ĐH Chính quy</td></tr></table>
+  <div class="de-so">ĐỀ SỐ: 06</div>
+  <div class="note-box">Sinh viên không được sử dụng tài liệu. Cán bộ coi thi không giải thích gì thêm.</div>
+  <div class="part-title">PHẦN I. TRẮC NGHIỆM (3 điểm) [CLO1]</div>
+
+  <div class="question"><div class="question-text">Câu 1. Hình trụ rỗng thành mỏng (I = mR<sup>2</sup>) bán kính R = 15 cm, khối lượng m = 3 kg, lăn không trượt với v = 4 m/s. Động năng toàn phần là:</div>
+  <div class="options"><div class="option"><span>A.</span> 24 J</div><div class="option"><span>B.</span> 36 J</div><div class="option"><span>C.</span> 12 J</div><div class="option"><span>D.</span> 48 J</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 2. Điện tích q = 10<sup>−8</sup> C cách dây tích điện đều r<sub>1</sub> = 8 cm, dịch chuyển đến r<sub>2</sub> = 2 cm, thực hiện công A = 5×10<sup>−6</sup> J. ε = 1. Mật độ điện dài τ của dây là:</div>
+  <div class="options"><div class="option"><span>A.</span> 2,0×10<sup>−8</sup> C/m</div><div class="option"><span>B.</span> 4,0×10<sup>−8</sup> C/m</div><div class="option"><span>C.</span> 1,0×10<sup>−8</sup> C/m</div><div class="option"><span>D.</span> 8,0×10<sup>−8</sup> C/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 3. Hai điện tích q<sub>1</sub> = q<sub>2</sub> > 0 đặt tại A, B cách nhau 6 cm. Vị trí M trên đường trung trực để E cực đại, cách AB khoảng r là:</div>
+  <div class="options"><div class="option"><span>A.</span> 4,24 cm</div><div class="option"><span>B.</span> 2,12 cm</div><div class="option"><span>C.</span> 3,00 cm</div><div class="option"><span>D.</span> 1,06 cm</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 4. Vòng dây tích điện Q = 10<sup>−8</sup> C, R = 5 cm. E tại M trên trục, cách tâm h = 10 cm (ε = 1, k = 9×10<sup>9</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 322 V/m</div><div class="option"><span>B.</span> 1288 V/m</div><div class="option"><span>C.</span> 644 V/m</div><div class="option"><span>D.</span> 215 V/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 5. Đạn m = 4 g, v<sub>0</sub> = 200 m/s dừng sau d = 2 cm. Lực cản và vận tốc qua gỗ dày 1 cm là:</div>
+  <div class="options"><div class="option"><span>A.</span> 4000 N ; 141 m/s</div><div class="option"><span>B.</span> 400 N ; 141 m/s</div><div class="option"><span>C.</span> 4000 N ; 283 m/s</div><div class="option"><span>D.</span> 400 N ; 283 m/s</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 6. Vòng dây R = 10 cm, B = 0,1 T, mặt phẳng ⊥ B, R<sub>đ</sub> = 3 Ω. Điện lượng qua vòng khi quay 90° là:</div>
+  <div class="options"><div class="option"><span>A.</span> 5,24×10<sup>−4</sup> C</div><div class="option"><span>B.</span> 1,05×10<sup>−2</sup> C</div><div class="option"><span>C.</span> 5,24×10<sup>−3</sup> C</div><div class="option"><span>D.</span> 1,05×10<sup>−3</sup> C</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 7. Mật độ năng lượng điện trường sát mặt phẳng vô hạn: σ = 3×10<sup>−5</sup> C/m<sup>2</sup>, ε = 2 (ε<sub>0</sub> = 8,86×10<sup>−12</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 3,17 J/m<sup>3</sup></div><div class="option"><span>B.</span> 6,35 J/m<sup>3</sup></div><div class="option"><span>C.</span> 12,7 J/m<sup>3</sup></div><div class="option"><span>D.</span> 1,59 J/m<sup>3</sup></div></div></div>
+
+  <div class="question"><div class="question-text">Câu 8. Quả cầu kim loại R = 15 cm, q = 3×10<sup>−8</sup> C. E tại M cách tâm 25 cm (k = 9×10<sup>9</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 8640 V/m</div><div class="option"><span>B.</span> 2160 V/m</div><div class="option"><span>C.</span> 4320 V/m</div><div class="option"><span>D.</span> 1080 V/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 9. Đỉnh tháp H = 8 m, ném đá v<sub>0</sub> = 10 m/s, α = 60°, g = 10 m/s<sup>2</sup>. Độ cao cực đại so với mặt đất là:</div>
+  <div class="options"><div class="option"><span>A.</span> 11,75 m</div><div class="option"><span>B.</span> 8,0 m</div><div class="option"><span>C.</span> 3,75 m</div><div class="option"><span>D.</span> 15,0 m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 10. Bánh xe I = 80 kg.m<sup>2</sup>, M<sub>dẫn</sub> = 400 N.m, ε = 2 rad/s<sup>2</sup>, μ = 0,4, R = 0,5 m. Lực mỗi má phanh là:</div>
+  <div class="options"><div class="option"><span>A.</span> 700 N</div><div class="option"><span>B.</span> 2800 N</div><div class="option"><span>C.</span> 280 N</div><div class="option"><span>D.</span> 1400 N</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 11. dI/dt = 50 A/s, ξ<sub>tc</sub> = 0,25 V. L bằng:</div>
+  <div class="options"><div class="option"><span>A.</span> 50 mH</div><div class="option"><span>B.</span> 5 mH</div><div class="option"><span>C.</span> 0,5 mH</div><div class="option"><span>D.</span> 50 μH</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 12. Tụ phẳng d = 2 mm, U = 500 V (không khí). Ngắt nguồn, lấp đầy ε = 7 (ε<sub>0</sub> = 8,86×10<sup>−12</sup>). σ tự do và σ' liên kết là:</div>
+  <div class="options">
+    <div class="option"><span>A.</span> σ = 4,43 μC/m<sup>2</sup> ; σ' = 1,90 μC/m<sup>2</sup></div>
+    <div class="option"><span>B.</span> σ = 2,22 μC/m<sup>2</sup> ; σ' = 0,32 μC/m<sup>2</sup></div>
+    <div class="option"><span>C.</span> σ = 2,22 μC/m<sup>2</sup> ; σ' = 1,90 μC/m<sup>2</sup></div>
+    <div class="option"><span>D.</span> σ = 1,11 μC/m<sup>2</sup> ; σ' = 0,95 μC/m<sup>2</sup></div>
+  </div></div>
+
+  <div class="question"><div class="question-text">Câu 13. Dây dẫn thẳng dài vô hạn, I = 4 A. H tại M cách dây 3 cm là:</div>
+  <div class="options"><div class="option"><span>A.</span> 21,2 A/m</div><div class="option"><span>B.</span> 42,4 A/m</div><div class="option"><span>C.</span> 10,6 A/m</div><div class="option"><span>D.</span> 84,9 A/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 14. Vòng dây tròn R = 8 cm, I = 3 A (chân không, μ<sub>0</sub> = 4π×10<sup>−7</sup>). B tại tâm vòng dây là:</div>
+  <div class="options"><div class="option"><span>A.</span> 4,71×10<sup>−5</sup> T</div><div class="option"><span>B.</span> 1,18×10<sup>−5</sup> T</div><div class="option"><span>C.</span> 7,07×10<sup>−5</sup> T</div><div class="option"><span>D.</span> 2,36×10<sup>−5</sup> T</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 15. q<sub>1</sub> = 5×10<sup>−7</sup> C, q<sub>2</sub> = 2×10<sup>−7</sup> C, r<sub>1</sub> = 100 cm. Công để đưa đến r<sub>2</sub> = 25 cm (k = 9×10<sup>9</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 1,35×10<sup>−3</sup> J</div><div class="option"><span>B.</span> 2,7×10<sup>−3</sup> J</div><div class="option"><span>C.</span> 5,4×10<sup>−3</sup> J</div><div class="option"><span>D.</span> 6,75×10<sup>−4</sup> J</div></div></div>
+
+  <div class="part-title">PHẦN II. TỰ LUẬN (7 điểm) [CLO2]</div>
+  <div class="essay-q"><p class="q-header">Câu 1. (1,5 điểm)</p><p>Mạch dao động: C = 0,8 μF, L = 3×10<sup>−2</sup> H, R = 4 Ω. a) Chu kỳ và lượng giảm logarithm. b) Thời gian biên độ U giảm 4 lần.</p></div>
+  <div class="essay-q"><p class="q-header">Câu 2. (1,5 điểm)</p><p>Hai khe Young: a = 1 mm, λ = 0,5 μm, D = 2 m. a) Vân sáng thứ 6, vân tối thứ 5. b) Đặt bản mỏng n = 1,5 trước một khe, hệ vân dịch 3 mm. Bề dày bản mỏng?</p></div>
+  <div class="essay-q"><p class="q-header">Câu 3. (1,0 điểm)</p><p>A = 2,48 eV. a) λ<sub>0</sub>. b) U<sub>h</sub> khi chiếu λ = 0,45 μm. (h = 6,625×10<sup>−34</sup> J.s, c = 3×10<sup>8</sup> m/s)</p></div>
+  <div class="essay-q"><p class="q-header">Câu 4. (1,0 điểm)</p><p>Tàu v = 0,7c. Hệ tàu: Δt<sub>0</sub> = 4 s, l<sub>0</sub> = 200 m. a) Δt ; b) l ; c) Động năng (m<sub>0</sub>).</p></div>
+  <div class="essay-q"><p class="q-header">Câu 5. (1,0 điểm)</p><p>Tụ phẳng: d = 5 mm, S = 100 cm<sup>2</sup>, U = 300 V. Ngắt, lấp êbônit ε = 5 (ε<sub>0</sub> = 8,86×10<sup>−12</sup>). Mật độ điện tích liên kết?</p></div>
+  <div class="essay-q"><p class="q-header">Câu 6. (1,0 điểm)</p><p>Điện tử tăng tốc U = 3000 V, vào từ trường B = 5×10<sup>−3</sup> T vuông góc. Bán kính quỹ đạo? (e = 1,6×10<sup>−19</sup> C, m<sub>e</sub> = 9,1×10<sup>−31</sup> kg)</p></div>
+
+  <hr class="section-divider">
+  <div class="footer-sig"><div class="sig-box"><p>TRƯỞNG BỘ MÔN DUYỆT ĐỀ</p><p><em>(ký và ghi rõ họ tên)</em></p><div class="sig-line"></div></div><div class="sig-box"><p>GIẢNG VIÊN RA ĐỀ</p><p><em>(ký và ghi rõ họ tên)</em></p><div class="sig-line"></div></div></div>
+</div>
+<div class="answer-section" id="ans6">
+  <button class="answer-toggle" onclick="toggleAns('ans6-content')">📋 ĐÁP ÁN ĐỀ 6 — Nhấn để xem / ẩn</button>
+  <div class="answer-content" id="ans6-content">
+    <h4 style="margin-bottom:8px;color:#155724">Phần I – Trắc nghiệm:</h4>
+    <div class="answer-grid">
+      <div class="ans-item">C1: <strong>D</strong></div><div class="ans-item">C2: <strong>A</strong></div>
+      <div class="ans-item">C3: <strong>B</strong></div><div class="ans-item">C4: <strong>C</strong></div>
+      <div class="ans-item">C5: <strong>A</strong></div><div class="ans-item">C6: <strong>D</strong></div>
+      <div class="ans-item">C7: <strong>B</strong></div><div class="ans-item">C8: <strong>C</strong></div>
+      <div class="ans-item">C9: <strong>A</strong></div><div class="ans-item">C10: <strong>D</strong></div>
+      <div class="ans-item">C11: <strong>B</strong></div><div class="ans-item">C12: <strong>C</strong></div>
+      <div class="ans-item">C13: <strong>A</strong></div><div class="ans-item">C14: <strong>D</strong></div>
+      <div class="ans-item">C15: <strong>B</strong></div>
+    </div>
+    <div class="essay-ans">
+      <h4>Phần II – Gợi ý tự luận:</h4>
+      <p><strong>C1:</strong> T ≈ 9,73×10⁻⁴ s ; δ ≈ 0,0649 ; t(giảm 4 lần) = 2L·ln4/R ≈ 20,8 ms</p>
+      <p><strong>C2:</strong> i = 1,0 mm ; VS₆ = 6,0 mm ; VT₅ = 4,5 mm ; e = 3,0 μm</p>
+      <p><strong>C3:</strong> λ₀ ≈ 0,501 μm ; U<sub>h</sub> ≈ 0,28 V</p>
+      <p><strong>C4:</strong> γ ≈ 1,4 ; Δt = 5,6 s ; l ≈ 142,9 m ; W<sub>k</sub> = 0,4·m₀c²</p>
+      <p><strong>C5:</strong> σ' = ε₀U(ε−1)/(ε·d) ≈ 4,25×10⁻⁷ C/m²</p>
+      <p><strong>C6:</strong> v ≈ 3,25×10⁷ m/s ; r ≈ 3,70 cm</p>
+    </div>
+  </div>
+</div>
+</div><!-- end exam6 -->
+
+<!-- ═══════════════════════════ ĐỀ 7 ═══════════════════════════ -->
+<div class="exam-section" id="exam7">
+<div class="exam-page">
+  <table class="header-table"><tr><td><span class="school-name">HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG<br>KHOA: CƠ BẢN 2</span></td><td><div class="exam-title">ĐỀ THI KẾT THÚC HỌC PHẦN<br>(Hình thức thi viết)</div><div style="font-size:12.5px">HK2 | 2025–2026</div></td></tr><tr><td>HP: <strong>Vật lý ứng dụng</strong> | BAS1270 | <strong>90 phút</strong></td><td>ĐH Chính quy</td></tr></table>
+  <div class="de-so">ĐỀ SỐ: 07</div>
+  <div class="note-box">Sinh viên không được sử dụng tài liệu. Cán bộ coi thi không giải thích gì thêm.</div>
+  <div class="part-title">PHẦN I. TRẮC NGHIỆM (3 điểm) [CLO1]</div>
+
+  <div class="question"><div class="question-text">Câu 1. Quả cầu đặc đồng chất bán kính R = 6 cm, khối lượng m = 1,5 kg, lăn không trượt với v = 4 m/s. Động năng toàn phần là:</div>
+  <div class="options"><div class="option"><span>A.</span> 12,0 J</div><div class="option"><span>B.</span> 8,4 J</div><div class="option"><span>C.</span> 16,8 J</div><div class="option"><span>D.</span> 24,0 J</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 2. Điện tích q = 10<sup>−8</sup> C cách dây tích điện đều r<sub>1</sub> = 5 cm, dịch chuyển đến r<sub>2</sub> = 1 cm, thực hiện công A = 2,3×10<sup>−6</sup> J. ε = 1. Tìm τ:</div>
+  <div class="options"><div class="option"><span>A.</span> 7,96×10<sup>−9</sup> C/m</div><div class="option"><span>B.</span> 1,59×10<sup>−8</sup> C/m</div><div class="option"><span>C.</span> 3,98×10<sup>−9</sup> C/m</div><div class="option"><span>D.</span> 3,18×10<sup>−8</sup> C/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 3. Hai điện tích q<sub>1</sub> = q<sub>2</sub> > 0 đặt tại A, B cách nhau 4 cm. Để E tại M (trên đường trung trực AB) cực đại, M cách AB khoảng r bằng:</div>
+  <div class="options"><div class="option"><span>A.</span> 2,83 cm</div><div class="option"><span>B.</span> 2,00 cm</div><div class="option"><span>C.</span> 0,71 cm</div><div class="option"><span>D.</span> 1,41 cm</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 4. Vòng dây tích điện Q = 10<sup>−9</sup> C, R = 3 cm. E tại M trên trục, cách tâm h = 4 cm (ε = 1, k = 9×10<sup>9</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 1440 V/m</div><div class="option"><span>B.</span> 2880 V/m</div><div class="option"><span>C.</span> 5760 V/m</div><div class="option"><span>D.</span> 960 V/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 5. Đạn m = 8 g, v<sub>0</sub> = 600 m/s dừng sau d = 10 cm. Lực cản và vận tốc qua gỗ dày 5 cm là:</div>
+  <div class="options"><div class="option"><span>A.</span> 14400 N ; 424 m/s</div><div class="option"><span>B.</span> 1440 N ; 424 m/s</div><div class="option"><span>C.</span> 14400 N ; 848 m/s</div><div class="option"><span>D.</span> 1440 N ; 848 m/s</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 6. Vòng dây R = 6 cm, B = 0,25 T, mặt phẳng ⊥ B, R<sub>đ</sub> = 0,5 Ω. Điện lượng qua vòng khi quay 90° là:</div>
+  <div class="options"><div class="option"><span>A.</span> 2,83×10<sup>−3</sup> C</div><div class="option"><span>B.</span> 5,65×10<sup>−2</sup> C</div><div class="option"><span>C.</span> 5,65×10<sup>−3</sup> C</div><div class="option"><span>D.</span> 2,83×10<sup>−4</sup> C</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 7. Mật độ năng lượng điện trường sát mặt phẳng vô hạn: σ = 5×10<sup>−5</sup> C/m<sup>2</sup>, ε = 5 (ε<sub>0</sub> = 8,86×10<sup>−12</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 3,53 J/m<sup>3</sup></div><div class="option"><span>B.</span> 14,1 J/m<sup>3</sup></div><div class="option"><span>C.</span> 1,41 J/m<sup>3</sup></div><div class="option"><span>D.</span> 7,05 J/m<sup>3</sup></div></div></div>
+
+  <div class="question"><div class="question-text">Câu 8. Quả cầu kim loại R = 20 cm, q = 10<sup>−7</sup> C. E tại M cách tâm 30 cm (k = 9×10<sup>9</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 2,0×10<sup>4</sup> V/m</div><div class="option"><span>B.</span> 1,0×10<sup>4</sup> V/m</div><div class="option"><span>C.</span> 5,0×10<sup>3</sup> V/m</div><div class="option"><span>D.</span> 4,0×10<sup>3</sup> V/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 9. Từ đỉnh tháp H = 20 m, ném thẳng đứng lên với v<sub>0</sub> = 10 m/s, g = 10 m/s<sup>2</sup>. Độ cao cực đại so với mặt đất là:</div>
+  <div class="options"><div class="option"><span>A.</span> 30 m</div><div class="option"><span>B.</span> 20 m</div><div class="option"><span>C.</span> 25 m</div><div class="option"><span>D.</span> 5 m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 10. Bánh xe I = 100 kg.m<sup>2</sup>, M<sub>dẫn</sub> = 2000 N.m, ε = 5 rad/s<sup>2</sup>, μ = 0,5, R = 0,4 m. Lực mỗi má phanh là:</div>
+  <div class="options"><div class="option"><span>A.</span> 6250 N</div><div class="option"><span>B.</span> 3125 N</div><div class="option"><span>C.</span> 12500 N</div><div class="option"><span>D.</span> 625 N</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 11. dI/dt = 400 A/s, ξ<sub>tc</sub> = 0,8 V. Hệ số tự cảm L là:</div>
+  <div class="options"><div class="option"><span>A.</span> 20 mH</div><div class="option"><span>B.</span> 0,2 mH</div><div class="option"><span>C.</span> 2 H</div><div class="option"><span>D.</span> 2 mH</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 12. Tụ phẳng d = 6 mm, U = 400 V (không khí). Ngắt nguồn, lấp ε = 3 (ε<sub>0</sub> = 8,86×10<sup>−12</sup>). σ tự do và σ' liên kết là:</div>
+  <div class="options">
+    <div class="option"><span>A.</span> σ = 11,8×10<sup>−7</sup> C/m<sup>2</sup> ; σ' = 3,94×10<sup>−7</sup> C/m<sup>2</sup></div>
+    <div class="option"><span>B.</span> σ = 5,91×10<sup>−7</sup> C/m<sup>2</sup> ; σ' = 3,94×10<sup>−7</sup> C/m<sup>2</sup></div>
+    <div class="option"><span>C.</span> σ = 5,91×10<sup>−7</sup> C/m<sup>2</sup> ; σ' = 1,97×10<sup>−7</sup> C/m<sup>2</sup></div>
+    <div class="option"><span>D.</span> σ = 2,95×10<sup>−7</sup> C/m<sup>2</sup> ; σ' = 1,97×10<sup>−7</sup> C/m<sup>2</sup></div>
+  </div></div>
+
+  <div class="question"><div class="question-text">Câu 13. Dây dẫn thẳng dài vô hạn, I = 15 A. H tại M cách dây 5 cm là:</div>
+  <div class="options"><div class="option"><span>A.</span> 95,5 A/m</div><div class="option"><span>B.</span> 23,9 A/m</div><div class="option"><span>C.</span> 47,7 A/m</div><div class="option"><span>D.</span> 191 A/m</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 14. Dây dẫn uốn thành tam giác đều cạnh a = 30 cm, dòng điện I = 10 A (μ<sub>0</sub> = 4π×10<sup>−7</sup>). B tại tâm tam giác là:</div>
+  <div class="options"><div class="option"><span>A.</span> 6,0×10<sup>−5</sup> T</div><div class="option"><span>B.</span> 3,0×10<sup>−5</sup> T</div><div class="option"><span>C.</span> 12,0×10<sup>−5</sup> T</div><div class="option"><span>D.</span> 2,0×10<sup>−5</sup> T</div></div></div>
+
+  <div class="question"><div class="question-text">Câu 15. q<sub>1</sub> = q<sub>2</sub> = 5×10<sup>−7</sup> C, r<sub>1</sub> = 100 cm. Công để đưa đến r<sub>2</sub> = 20 cm (k = 9×10<sup>9</sup>) là:</div>
+  <div class="options"><div class="option"><span>A.</span> 4,5×10<sup>−3</sup> J</div><div class="option"><span>B.</span> 1,8×10<sup>−2</sup> J</div><div class="option"><span>C.</span> 2,25×10<sup>−3</sup> J</div><div class="option"><span>D.</span> 9,0×10<sup>−3</sup> J</div></div></div>
+
+  <div class="part-title">PHẦN II. TỰ LUẬN (7 điểm) [CLO2]</div>
+  <div class="essay-q"><p class="q-header">Câu 1. (1,5 điểm)</p><p>Mạch dao động: C = 0,4 μF, L = 4×10<sup>−2</sup> H, R = 6 Ω. a) Chu kỳ và lượng giảm logarithm. b) Thời gian biên độ U giảm 2 lần.</p></div>
+  <div class="essay-q"><p class="q-header">Câu 2. (1,5 điểm)</p><p>Hai khe Young: a = 2 mm, λ = 0,589 μm, D = 1,5 m. a) Vân sáng thứ 4 và vân tối thứ 6. b) Đặt bản mỏng n = 1,5 trước một khe, hệ vân dịch 1,32 mm. Bề dày bản mỏng?</p></div>
+  <div class="essay-q"><p class="q-header">Câu 3. (1,0 điểm)</p><p>A = 1,88 eV. a) λ<sub>0</sub>. b) U<sub>h</sub> khi chiếu λ = 0,546 μm. (h = 6,625×10<sup>−34</sup> J.s, c = 3×10<sup>8</sup> m/s)</p></div>
+  <div class="essay-q"><p class="q-header">Câu 4. (1,0 điểm)</p><p>Tàu v = 0,75c. Hệ tàu: Δt<sub>0</sub> = 6 s, l<sub>0</sub> = 120 m. a) Δt ; b) l ; c) Động năng (m<sub>0</sub>).</p></div>
+  <div class="essay-q"><p class="q-header">Câu 5. (1,0 điểm)</p><p>Tụ phẳng: d = 2 mm, S = 60 cm<sup>2</sup>, U = 400 V. Ngắt, lấp êbônit ε = 8. Tính mật độ điện tích liên kết. (ε<sub>0</sub> = 8,86×10<sup>−12</sup>)</p></div>
+  <div class="essay-q"><p class="q-header">Câu 6. (1,0 điểm)</p><p>Điện tử tăng tốc U = 800 V, vào từ trường B = 1,5×10<sup>−3</sup> T vuông góc. Bán kính quỹ đạo? (e = 1,6×10<sup>−19</sup> C, m<sub>e</sub> = 9,1×10<sup>−31</sup> kg)</p></div>
+
+  <hr class="section-divider">
+  <div class="footer-sig"><div class="sig-box"><p>TRƯỞNG BỘ MÔN DUYỆT ĐỀ</p><p><em>(ký và ghi rõ họ tên)</em></p><div class="sig-line"></div></div><div class="sig-box"><p>GIẢNG VIÊN RA ĐỀ</p><p><em>(ký và ghi rõ họ tên)</em></p><div class="sig-line"></div></div></div>
+</div>
+<div class="answer-section" id="ans7">
+  <button class="answer-toggle" onclick="toggleAns('ans7-content')">📋 ĐÁP ÁN ĐỀ 7 — Nhấn để xem / ẩn</button>
+  <div class="answer-content" id="ans7-content">
+    <h4 style="margin-bottom:8px;color:#155724">Phần I – Trắc nghiệm:</h4>
+    <div class="answer-grid">
+      <div class="ans-item">C1: <strong>C</strong></div><div class="ans-item">C2: <strong>A</strong></div>
+      <div class="ans-item">C3: <strong>D</strong></div><div class="ans-item">C4: <strong>B</strong></div>
+      <div class="ans-item">C5: <strong>A</strong></div><div class="ans-item">C6: <strong>C</strong></div>
+      <div class="ans-item">C7: <strong>D</strong></div><div class="ans-item">C8: <strong>B</strong></div>
+      <div class="ans-item">C9: <strong>C</strong></div><div class="ans-item">C10: <strong>A</strong></div>
+      <div class="ans-item">C11: <strong>D</strong></div><div class="ans-item">C12: <strong>B</strong></div>
+      <div class="ans-item">C13: <strong>C</strong></div><div class="ans-item">C14: <strong>A</strong></div>
+      <div class="ans-item">C15: <strong>D</strong></div>
+    </div>
+    <div class="essay-ans">
+      <h4>Phần II – Gợi ý tự luận:</h4>
+      <p><strong>C1:</strong> T ≈ 7,95×10⁻⁴ s ; δ ≈ 0,0596 ; t(giảm 2 lần) = 2L·ln2/R ≈ 9,24 ms</p>
+      <p><strong>C2:</strong> i ≈ 0,442 mm ; VS₄ ≈ 1,77 mm ; VT₆ ≈ 2,43 mm ; e ≈ 3,53 μm</p>
+      <p><strong>C3:</strong> λ₀ ≈ 0,661 μm ; U<sub>h</sub> ≈ 0,40 V</p>
+      <p><strong>C4:</strong> γ ≈ 1,512 ; Δt ≈ 9,1 s ; l ≈ 79,4 m ; W<sub>k</sub> ≈ 0,512·m₀c²</p>
+      <p><strong>C5:</strong> σ' = ε₀U(ε−1)/(ε·d) ≈ 1,55×10⁻⁶ C/m²</p>
+      <p><strong>C6:</strong> v ≈ 1,677×10⁷ m/s ; r ≈ 6,36 cm</p>
+    </div>
+  </div>
+</div>
+</div><!-- end exam7 -->
+
+<script>
+function showExam(n) {
+  document.querySelectorAll('.exam-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('exam'+n).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0,0);
+}
+function toggleAns(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+</script>
 </body>
 </html>

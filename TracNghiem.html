@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập Vật Lý Ứng Dụng</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body style="margin: 0; background-color: #f3f4f6;">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Dữ liệu 40 câu hỏi từ đoạn code của bạn
+        const questions = [
+            { q : "Câu 1. Phát biểu nào sau đây là SAI?" , opts : [ "Hai điện tích cùng dấu thì đẩy nhau, trái dấu thì hút nhau." , "Điện tích của một hệ cô lập luôn không đổi." , "Trong tự nhiên tồn tại hai loại điện tích: dương và âm." , "Hai vật trái dấu mà chạm nhau thì sẽ trở thành hai vật trung hòa về điện." ] , ans : 3 , explain : "Khi hai vật trái dấu tiếp xúc, điện tích trung hòa một phần hoặc hoàn toàn tùy theo độ lớn điện tích mỗi vật — không nhất thiết cả hai đều trở thành trung hòa." } ,
+            { q : "Câu 2. Cường độ điện trường tại một điểm là đại lượng vật lý được đo bằng:" , opts : [ "Lực tác dụng lên điện tích q đặt tại điểm đó nhân với điện tích đó." , "Lực điện trường tác dụng lên điện tích q đặt tại điểm đó." , "Lực tác dụng của điện trường lên một đơn vị điện tích dương đặt tại điểm đó." , "Tỉ số giữa lực điện tương tác giữa hai điện tích q1, q2 với khoảng cách giữa chúng." ] , ans : 2 , explain : "Cường độ điện trường E = F/q, tức là lực tác dụng lên một đơn vị điện tích dương đặt tại điểm đó." } ,
+            { q : "Câu 3. Câu phát biểu nào sau đây là ĐÚNG về trường tĩnh điện?" , opts : [ "Trường tĩnh điện do từ trường không đổi sinh ra." , "Trường tĩnh điện gây bởi điện tích q đứng yên trong hệ quy chiếu cố định." , "Trường tĩnh điện do dòng điện không đổi sinh ra." , "Điện trường không thay đổi trong các môi trường khác nhau." ] , ans : 1 , explain : "Trường tĩnh điện là điện trường do điện tích đứng yên trong hệ quy chiếu cố định gây ra." } ,
+            { q : "Câu 4. Trường điện từ là gì?" , opts : [ "Trường điện từ gồm điện trường tĩnh và từ trường dừng kết hợp với nhau." , "Trường điện từ gồm điện trường và từ trường biến thiên theo thời gian chuyển hóa lẫn nhau và tạo thành một trường thống nhất." , "Trường điện từ gồm điện trường tĩnh và từ trường biến thiên kết hợp với nhau." , "Trường điện từ gồm điện trường xoáy và từ trường biến thiên trong không gian kết hợp với nhau." ] , ans : 1 , explain : "Trường điện từ là sự thống nhất của điện trường và từ trường biến thiên theo thời gian, chúng chuyển hóa lẫn nhau." } ,
+            { q : "Câu 5. Hai vật tích điện +10C và -6C trao đổi điện tích cho nhau. Điện tích lúc sau có thể là:" , opts : [ "+3C và +1C" , "-4C và +12C" , "-7C và +9C" , "+9C và -7C" ] , ans : 0 , explain : "Tổng điện tích bảo toàn: +10 + (-6) = +4C. Chỉ đáp án A có tổng: 3+1 = +4C ✓ (các đáp án khác: -4+12=+8, -7+9=+2, 9-7=+2)." } ,
+            { q : "Câu 6. Điện thông gửi qua một mặt kín chứa một điện tích q thì:" , opts : [ "Phụ thuộc vào diện tích và hình dạng mặt kín." , "Phụ thuộc vào diện tích mặt kín, không phụ thuộc hình dạng." , "Không phụ thuộc vào diện tích hay hình dạng mặt kín." , "Không phụ thuộc vào diện tích, phụ thuộc vào hình dạng mặt kín." ] , ans : 2 , explain : "Theo định lý Gauss: Φ = q/ε₀, chỉ phụ thuộc vào tổng điện tích bên trong mặt kín, không phụ thuộc hình dạng hay diện tích." } ,
+            { q : "Câu 7. Lực tương tác giữa hai quả cầu tích điện sẽ thay đổi thế nào nếu tăng gấp đôi độ lớn điện tích của cả hai và tăng khoảng cách gấp đôi?" , opts : [ "Không đổi" , "Tăng gấp đôi" , "Giảm đi 8 lần" , "Tăng gấp 4 lần" ] , ans : 0 , explain : "F = kq1q2/r². Tăng q1, q2 gấp đôi → tử số ×4. Tăng r gấp đôi → mẫu số ×4. Tổng kết: F không đổi." } ,
+            { q : "Câu 8. Các đường sức điện trường của hệ điện tích đứng yên là những đường:" , opts : [ "Luôn hướng tới các điện tích dương" , "Luôn đi ra xa điện tích âm" , "Không khép kín" , "Xuất phát từ điện tích âm, tận cùng ở điện tích dương" ] , ans : 2 , explain : "Đường sức điện trường tĩnh xuất phát từ điện tích dương, kết thúc ở điện tích âm (hoặc vô cực) — chúng không bao giờ khép kín." } ,
+            { q : "Câu 9. Câu phát biểu nào sau đây là SAI?" , opts : [ "Từ trường biến thiên theo thời gian và điện trường biến thiên theo thời gian có thể chuyển hóa cho nhau." , "Điện trường biến thiên theo thời gian sinh ra từ trường." , "Từ trường không đổi và điện trường không đổi có thể chuyển hóa cho nhau." , "Từ trường biến thiên theo thời gian sinh ra điện trường xoáy." ] , ans : 2 , explain : "Chỉ có từ trường BIẾN THIÊN mới sinh ra điện trường xoáy (và ngược lại). Từ trường không đổi và điện trường không đổi không thể chuyển hóa cho nhau." } ,
+            { q : "Câu 10. Hai mặt phẳng song song vô hạn mang điện trái dấu, cách nhau 2 cm, hiệu điện thế 120 V. Cường độ điện trường giữa hai mặt phẳng là:" , opts : [ "600 V/m" , "240 V/m" , "6000 V/m" , "6000 V" ] , ans : 2 , explain : "E = U/d = 120 V / 0,02 m = 6000 V/m." } ,
+            { q : "Câu 11. Công của lực điện trường làm điện tích thử q₀ di chuyển từ M đến N có đặc điểm:" , opts : [ "Không phụ thuộc vào điện tích q₀" , "Phụ thuộc vào quỹ đạo chuyển động của điện tích q₀" , "Luôn dương" , "Không phụ thuộc vào hình dạng quỹ đạo" ] , ans : 3 , explain : "Điện trường tĩnh là trường thế (trường bảo toàn), nên công chỉ phụ thuộc vị trí đầu và cuối, không phụ thuộc hình dạng quỹ đạo." } ,
+            { q : "Câu 12. Cho điện tích điểm Q > 0. Kết luận nào sau đây là ĐÚNG?" , opts : [ "Càng xa điện tích Q điện thế càng tăng" , "Điện thế không phụ thuộc vào vị trí" , "Càng xa điện tích Q điện thế càng giảm" , "Đường sức điện trường hướng từ vô cực về Q" ] , ans : 2 , explain : "V = kQ/r. Với Q > 0, khi r tăng thì V giảm. Đường sức hướng ra xa Q (từ Q ra vô cực)." } ,
+            { q : "Câu 13. Trong trường tĩnh điện, phát biểu nào sau đây là SAI?" , opts : [ "Vectơ cường độ điện trường luôn hướng theo chiều giảm điện thế." , "Vectơ cường độ điện trường nằm trên tiếp tuyến của đường sức điện trường." , "Công của lực điện trường có biểu thức: A₁₂ = q(V₂ – V₁)." , "Vectơ cường độ điện trường vuông góc với mặt đẳng thế." ] , ans : 2 , explain : "Công đúng là A₁₂ = q(V₁ – V₂), không phải q(V₂ – V₁). Dấu bị ngược." } ,
+            { q : "Câu 14. Điện thế tại một điểm trong điện trường là:" , opts : [ "Công của lực tĩnh điện dịch chuyển một đơn vị điện tích dương từ vô cùng đến điểm đó." , "Công của lực tĩnh điện dịch chuyển một điện tích dương từ vô cùng đến điểm đó." , "Công của lực tĩnh điện dịch chuyển một đơn vị điện tích dương từ điểm đó ra xa vô cùng." , "Công của lực tĩnh điện dịch chuyển một điện tích dương từ điểm đó đến vô cùng." ] , ans : 2 , explain : "Điện thế V = A/q, với A là công dịch chuyển một đơn vị điện tích dương từ điểm đó ra vô cực." } ,
+            { q : "Câu 15. Tụ phẳng (không khí) được đấu ắc qui nạp điện, sau đó đưa điện môi vào lấp đầy. Nhận định nào SAI?" , opts : [ "Hiệu điện thế giữa hai bản tụ không đổi." , "Cường độ điện trường giữa các bản không đổi." , "Năng lượng dự trữ trong tụ không đổi." , "Điện tích của tụ tăng." ] , ans : 2 , explain : "Khi có điện môi ε > 1, C tăng, U không đổi (vì vẫn nối ắc qui) → W = ½CU² tăng chứ không đổi." } ,
+            { q : "Câu 16. Câu phát biểu nào sau đây là ĐÚNG về dòng điện cảm ứng?" , opts : [ "Khi diện tích mạch điện kín biến đổi thì trong mạch sẽ xuất hiện dòng điện cảm ứng." , "Dòng điện cảm ứng luôn có chiều tuân theo nguyên nhân đã sinh ra nó." , "Khi từ thông gửi qua một mạch kín biến đổi thì trong mạch sẽ xuất hiện dòng điện cảm ứng." , "Sự biến thiên từ trường trong mạch kín gây ra hiện tượng tự cảm." ] , ans : 2 , explain : "Theo định luật Faraday, dòng điện cảm ứng xuất hiện khi từ thông qua mạch kín biến đổi (không nhất thiết do diện tích thay đổi)." } ,
+            { q : "Câu 17. Câu phát biểu nào sau đây là ĐÚNG?" , opts : [ "Dòng điện cảm ứng luôn có chiều chống lại nguyên nhân đã sinh ra nó." , "Khi diện tích mạch điện kín biến đổi thì trong mạch sẽ xuất hiện dòng điện cảm ứng." , "Sự biến thiên từ trường trong mạch kín gây ra hiện tượng tự cảm." , "Cho khung dây quay đều trong từ trường đều thì xuất hiện dòng điện tự cảm." ] , ans : 0 , explain : "Đây là nội dung định luật Lenz: dòng điện cảm ứng luôn có chiều chống lại sự thay đổi từ thông đã sinh ra nó." } ,
+            { q : "Câu 18. Câu phát biểu nào sau đây là ĐÚNG?" , opts : [ "Khi diện tích mạch điện kín biến đổi thì trong mạch sẽ xuất hiện dòng điện cảm ứng." , "Dòng điện cảm ứng luôn có chiều tuân theo nguyên nhân đã sinh ra nó." , "Sự biến thiên dòng điện trong mạch điện xoay chiều gây ra hiện tượng tự cảm." , "Cho khung dây quay đều trong từ trường đều thì xuất hiện dòng điện tự cảm." ] , ans : 2 , explain : "Tự cảm xảy ra khi dòng điện trong mạch biến thiên, tạo ra từ thông biến thiên, sinh ra suất điện động tự cảm chống lại sự thay đổi đó." } ,
+            { q : "Câu 19. Câu phát biểu nào sau đây là ĐÚNG?" , opts : [ "Khi diện tích mạch điện kín biến đổi thì trong mạch sẽ xuất hiện dòng điện cảm ứng." , "Dòng điện cảm ứng luôn có chiều tuân theo nguyên nhân đã sinh ra nó." , "Sự biến thiên từ trường trong mạch kín gây ra hiện tượng tự cảm." , "Cho khung dây quay đều trong từ trường đều thì trong khung xuất hiện dòng điện cảm ứng xoay chiều." ] , ans : 3 , explain : "Khung dây quay đều trong từ trường đều làm từ thông biến đổi điều hòa → suất điện động xoay chiều → dòng điện cảm ứng xoay chiều." } ,
+            { q : "Câu 20. Câu phát biểu nào sau đây là ĐÚNG về nam châm và ống dây?" , opts : [ "Khi đưa cực Bắc ra xa ống dây thì xuất hiện dòng cảm ứng ngược chiều kim đồng hồ." , "Khi đưa cực Nam lại gần ống dây thì xuất hiện dòng cảm ứng ngược chiều kim đồng hồ." , "Cường độ dòng điện cảm ứng phụ thuộc vào chiều di chuyển của nam châm." , "Khi đưa cực Bắc lại gần ống dây thì xuất hiện dòng cảm ứng ngược chiều kim đồng hồ." ] , ans : 3 , explain : "Cực Bắc lại gần → từ thông tăng → theo định luật Lenz, dòng cảm ứng tạo ra từ trường chống lại → dòng chạy ngược chiều kim đồng hồ (nhìn từ phía cực Bắc)." } ,
+            { q : "Câu 21. Câu phát biểu nào sau đây là ĐÚNG?" , opts : [ "Giữ nam châm đứng yên và cho ống dây di chuyển thì không có dòng cảm ứng." , "Di chuyển nam châm trong ống dây càng nhanh thì cường độ dòng điện cảm ứng càng lớn." , "Cường độ dòng điện cảm ứng phụ thuộc vào chiều di chuyển của nam châm." , "Chiều dòng điện cảm ứng phụ thuộc vào tốc độ di chuyển của nam châm." ] , ans : 1 , explain : "Di chuyển nhanh hơn → tốc độ biến thiên từ thông lớn hơn → suất điện động cảm ứng lớn hơn → dòng điện mạnh hơn." } ,
+            { q : "Câu 22. Phát biểu luận điểm 1 của Maxwell:" , opts : [ "Bất kỳ một điện trường nào biến đổi theo thời gian cũng gây ra một từ trường." , "Bất kỳ một từ trường nào cũng sinh ra một điện trường xoáy." , "Bất kỳ một điện trường nào cũng gây ra một từ trường." , "Bất kỳ một từ trường nào biến đổi theo thời gian cũng sinh ra một điện trường xoáy." ] , ans : 3 , explain : "Luận điểm 1: từ trường BIẾN THIÊN → điện trường xoáy. Luận điểm 2: điện trường biến thiên → từ trường." } ,
+            { q : "Câu 23. Người 50 kg trong thang máy đi lên: nhanh dần đều → đều → chậm dần đều, a = 5 m/s², g = 10 m/s². Lực nén theo thứ tự là:" , opts : [ "250N; 500N; 750N" , "750N; 250N; 500N" , "250N; 750N; 500N" , "750N; 500N; 250N" ] , ans : 3 , explain : "Nhanh dần đi lên: N = m(g+a) = 50×15 = 750N. Đều: N = mg = 500N. Chậm dần đi lên: N = m(g−a) = 50×5 = 250N." } ,
+            { q : "Câu 24. Câu phát biểu nào sau đây là ĐÚNG về đường sức điện trường?" , opts : [ "Điện trường tĩnh có các đường sức đi ra từ điện tích âm và đi vào điện tích dương." , "Điện trường xoáy có các đường sức khép kín." , "Điện trường tĩnh có các đường sức khép kín." , "Điện trường xoáy có các đường sức hở." ] , ans : 1 , explain : "Điện trường xoáy (sinh ra từ từ trường biến thiên) có các đường sức khép kín, khác với điện trường tĩnh (đường sức hở)." } ,
+            { q : "Câu 25. Câu phát biểu nào sau đây là ĐÚNG về dòng Foucault?" , opts : [ "Khi diện tích mạch điện kín biến đổi thì trong mạch sẽ xuất hiện dòng điện cảm ứng." , "Sự biến thiên từ trường trong mạch kín gây ra hiện tượng tự cảm." , "Một khối vật dẫn đặt trong từ trường biến thiên theo thời gian thì trong vật dẫn xuất hiện dòng điện cảm ứng xoáy gọi là dòng Foucault." , "Cho khung dây quay đều trong từ trường đều thì xuất hiện dòng điện tự cảm." ] , ans : 2 , explain : "Dòng Foucault (dòng xoáy) là dòng điện cảm ứng xuất hiện trong khối vật dẫn khi đặt trong từ trường biến thiên." } ,
+            { q : "Câu 26. Điện thông gửi qua mặt kín phụ thuộc vào:" , opts : [ "Hình dạng mặt kín" , "Diện tích và hình dạng mặt kín" , "Tổng điện tích bên trong mặt kín" , "Vị trí đặt điện tích bên trong" ] , ans : 2 , explain : "Theo định lý Gauss: Φ = Q_trong/ε₀, chỉ phụ thuộc tổng điện tích bên trong mặt kín, không phụ thuộc hình dạng hay vị trí đặt điện tích." } ,
+            { q : "Câu 27. Dòng điện dịch có vectơ mật độ dòng bằng:" , opts : [ "Tốc độ biến thiên của cường độ điện trường" , "Tốc độ biến thiên của từ trường" , "Tốc độ biến thiên theo thời gian của vectơ cảm ứng điện D" , "Tích của permittivity và điện trường" ] , ans : 2 , explain : "Mật độ dòng điện dịch: j_d = ∂D/∂t, trong đó D = εε₀E là vectơ cảm ứng điện." } ,
+            { q : "Câu 28. Ống dây 100 vòng quay 5 vòng/s trong từ trường B = 0,1 T, tiết diện 100 cm². Suất điện động cực đại là:" , opts : [ "2,14 V" , "3,14 J" , "2,14 J" , "3,14 V" ] , ans : 3 , explain : "ω = 2π×5 = 10π rad/s. E_max = NBAω = 100 × 0,1 × 0,01 × 10π ≈ 3,14 V." } ,
+            { q : "Câu 29. Câu phát biểu nào sau đây là ĐÚNG về dòng điện dịch?" , opts : [ "Dòng điện dịch là dòng chuyển dời có hướng của các điện tích." , "Dòng điện dịch và dòng điện dẫn là một." , "Dòng điện dịch có vectơ mật độ dòng bằng tốc độ biến thiên theo thời gian của vectơ cảm ứng điện." , "Dòng điện dẫn xuất hiện trong tụ điện đang phóng hay nạp điện." ] , ans : 2 , explain : "Dòng điện dịch không phải là chuyển dời điện tích, mà đặc trưng bởi j_d = ∂D/∂t, xuất hiện ở khoảng trống (như trong tụ điện)." } ,
+            { q : "Câu 30. Câu phát biểu nào sau đây là ĐÚNG về dòng điện dịch?" , opts : [ "Dòng điện dịch gây ra từ trường như dòng điện dẫn." , "Dòng điện dịch là dòng chuyển dời có hướng của các điện tích." , "Dòng điện dịch và dòng điện dẫn là một." , "Dòng điện dẫn xuất hiện trong tụ điện đang phóng hay nạp điện." ] , ans : 0 , explain : "Theo Maxwell, dòng điện dịch gây ra từ trường hoàn toàn giống như dòng điện dẫn — đây là điểm mấu chốt trong lý thuyết Maxwell." } ,
+            { q : "Câu 31. Ôtô 1 tấn nhanh dần đều với a = 2 m/s², hệ số ma sát k = 0,1, g = 10 m/s². Lực kéo của động cơ là:" , opts : [ "300 N" , "4000 N" , "400 N" , "3000 N" ] , ans : 3 , explain : "F_kéo = ma + F_ms = 1000×2 + 0,1×1000×10 = 2000 + 1000 = 3000 N." } ,
+            { q : "Câu 32. Trường điện từ là gì? (Câu 32)" , opts : [ "Trường điện từ gồm điện trường và từ trường biến thiên theo thời gian chuyển hóa lẫn nhau và tạo thành một trường thống nhất." , "Trường điện từ gồm điện trường tĩnh và từ trường dừng kết hợp với nhau." , "Trường điện từ gồm điện trường tĩnh và từ trường biến thiên kết hợp." , "Trường điện từ gồm điện trường xoáy và từ trường biến thiên trong không gian." ] , ans : 0 , explain : "Trường điện từ là sự thống nhất của điện trường và từ trường biến thiên, chuyển hóa qua lại lẫn nhau." } ,
+            { q : "Câu 33. Sóng điện từ là gì?" , opts : [ "Sóng điện từ là điện trường và từ trường biến đổi trong không gian." , "Sóng điện từ là điện trường và từ trường lan truyền trong không gian." , "Sóng điện từ là trường điện từ biến đổi tuần hoàn theo thời gian lan truyền trong không gian." , "Sóng điện từ là sóng cơ." ] , ans : 2 , explain : "Sóng điện từ là trường điện từ biến đổi tuần hoàn lan truyền trong không gian, không cần môi trường vật chất." } ,
+            { q : "Câu 34. Câu phát biểu nào sau đây là ĐÚNG?" , opts : [ "Từ trường gây ra điện trường xoáy." , "Từ trường biến đổi theo thời gian gây ra dòng điện dịch." , "Điện trường xoáy có công bằng không khi dịch chuyển điện tích theo đường kín." , "Từ trường là trường có đường sức khép kín." ] , ans : 3 , explain : "Từ trường luôn có đường sức từ khép kín (không có điện tích từ), khác với điện trường tĩnh có đường sức hở." } ,
+            { q : "Câu 35. Ôtô 1600 kg đi v = 36 km/h trên cầu cong lên (R = 100 m, g = 10 m/s²). Lực nén tại điểm cao nhất là:" , opts : [ "14400 N" , "1440 N" , "14000 N" , "1400 N" ] , ans : 0 , explain : "v = 36 km/h = 10 m/s. N = m(g − v²/R) = 1600×(10 − 100/100) = 1600×9 = 14400 N." } ,
+            { q : "Câu 36. Câu phát biểu nào sau đây là ĐÚNG?" , opts : [ "Từ trường và điện trường có thể chuyển hóa cho nhau." , "Trường điện từ là sự hợp nhất giữa điện trường và từ trường." , "Sóng điện từ lan truyền trong chân không và môi trường với vận tốc như nhau và bằng c = 3.10⁸ m/s." , "Từ trường biến thiên và điện trường biến thiên theo thời gian có thể chuyển hóa cho nhau." ] , ans : 3 , explain : "Chỉ có từ trường BIẾN THIÊN và điện trường BIẾN THIÊN mới có thể chuyển hóa cho nhau (không phải mọi từ trường và điện trường)." } ,
+            { q : "Câu 37. Tụ phẳng (không khí) đấu ắc qui, sau đó đưa điện môi vào lấp đầy. Nhận định nào SAI?" , opts : [ "Hiệu điện thế giữa hai bản tụ không đổi." , "Năng lượng dự trữ trong tụ không đổi." , "Cường độ điện trường giữa các bản không đổi." , "Điện tích của tụ tăng." ] , ans : 1 , explain : "C tăng (do có điện môi ε > 1), U không đổi (vẫn nối ắc qui) → W = ½CU² tăng, không phải không đổi." } ,
+            { q : "Câu 38. Vật ném với v₀ = 10 m/s, góc 30° so với ngang, g = 10 m/s². Thời gian đạt độ cao lớn nhất là:" , opts : [ "5 s" , "10 s" , "0,5 s" , "1 s" ] , ans : 2 , explain : "v₀y = v₀ sin30° = 10 × 0,5 = 5 m/s. t = v₀y/g = 5/10 = 0,5 s." } ,
+            { q : "Câu 39. Hai quả cầu kim loại bán kính R₁, R₂ nối nhau bằng dây dẫn mảnh, cân bằng tĩnh điện. Khẳng định nào ĐÚNG?" , opts : [ "V₁ = V₂" , "q₁ = q₂" , "E₁ = E₂" , "q₁V₁ = q₂V₂" ] , ans : 0 , explain : "Khi nối bằng dây dẫn và đạt cân bằng tĩnh điện, hai vật có cùng điện thế V₁ = V₂ — điều kiện cân bằng." } ,
+            { q : "Câu 40. Đoàn tàu vào đường tròn R = 1 km, dài 600 m, v₀ = 54 km/h, thời gian 30 s (nhanh dần đều). Vận tốc và gia tốc pháp tuyến cuối quãng đường là:" , opts : [ "25 m/s ; 0,625 m/s²" , "12 m/s ; 0,625 m/s²" , "25 m/s² ; 0,425 m/s²" , "18 m/s ; 0,7 m/s²" ] , ans : 0 , explain : "v₀ = 54 km/h = 15 m/s. s = v₀t + ½at² → 600 = 15×30 + ½a×900 → a_t = (600−450)/450 = 1/3 m/s². v = v₀ + a_t×t = 15 + (1/3)×30 = 25 m/s. aₙ = v²/R = 625/1000 = 0,625 m/s²." }
+        ];
+
+        function PhysicsQuiz() {
+            const [current, setCurrent] = useState(0);
+            const [selected, setSelected] = useState(null);
+            const [submitted, setSubmitted] = useState(false);
+            const [score, setScore] = useState(0);
+            const [done, setDone] = useState(false);
+            const [answers, setAnswers] = useState([]);
+
+            const q = questions[current];
+            const total = questions.length;
+
+            function handleSelect(i) {
+                if (!submitted) setSelected(i);
+            }
+
+            function handleSubmit() {
+                if (selected === null) return;
+                setSubmitted(true);
+                if (selected === q.ans) setScore(s => s + 1);
+                setAnswers(a => [...a, { correct: selected === q.ans, selected, ans: q.ans }]);
+            }
+
+            function handleNext() {
+                if (current + 1 >= total) setDone(true);
+                else {
+                    setCurrent(c => c + 1);
+                    setSelected(null);
+                    setSubmitted(false);
+                }
+            }
+
+            function restart() {
+                setCurrent(0);
+                setSelected(null);
+                setSubmitted(false);
+                setScore(0);
+                setDone(false);
+                setAnswers([]);
+            }
+
+            const pct = Math.round((score / total) * 100);
+
+            if (done) {
+                const grade = pct >= 90 ? "Xuất sắc! 🏆" : pct >= 70 ? "Tốt! 👍" : pct >= 50 ? "Trung bình 📚" : "Cần ôn thêm 💪";
+                return (
+                    <div style={{ fontFamily: "sans-serif", maxWidth: 620, margin: "20px auto", padding: 20 }}>
+                        <div style={{ background: "linear-gradient(135deg,#1e3a5f,#2563eb)", borderRadius: 16, padding: 32, textAlign: "center", color: "white", marginBottom: 20 }}>
+                            <div style={{ fontSize: 56 }}>🎓</div>
+                            <h2 style={{ margin: "8px 0 4px", fontSize: 22 }}>Kết quả ôn tập</h2>
+                            <div style={{ fontSize: 52, fontWeight: 800, margin: "12px 0" }}>{score}<span style={{ fontSize: 24, opacity: .7 }}>/{total}</span></div>
+                            <div style={{ fontSize: 18, opacity: .9, marginBottom: 10 }}>{pct}% câu đúng</div>
+                            <div style={{ background: "rgba(255,255,255,.2)", borderRadius: 8, padding: "6px 18px", display: "inline-block", fontSize: 16 }}>{grade}</div>
+                        </div>
+                        <div style={{ background: "white", borderRadius: 12, padding: 18, marginBottom: 16, boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
+                            <h3 style={{ margin: "0 0 12px", color: "#1e3a5f", fontSize: 15 }}>📋 Chi tiết từng câu</h3>
+                            <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 6 }}>
+                                {answers.map((a, i) => (
+                                    <div key={i} style={{ background: a.correct ? "#dcfce7" : "#fee2e2", border: `1px solid ${a.correct ? "#86efac" : "#fca5a5"}`, borderRadius: 8, padding: "6px 4px", textAlign: "center", fontSize: 13 }}>
+                                        <div style={{ fontWeight: 700, color: a.correct ? "#166534" : "#991b1b" }}>C{i + 1}</div>
+                                        <div style={{ fontSize: 16 }}>{a.correct ? "✓" : "✗"}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <button onClick={restart} style={{ width: "100%", padding: 14, background: "linear-gradient(135deg,#1e3a5f,#2563eb)", color: "white", border: "none", borderRadius: 10, fontSize: 16, cursor: "pointer", fontWeight: 700 }}>🔄 Làm lại từ đầu</button>
+                    </div>
+                );
+            }
+
+            return (
+                <div style={{ fontFamily: "sans-serif", maxWidth: 620, margin: "20px auto", padding: 20 }}>
+                    <div style={{ background: "linear-gradient(135deg,#1e3a5f,#2563eb)", borderRadius: 12, padding: "12px 18px", marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <div style={{ color: "white", fontWeight: 700, fontSize: 14 }}>⚡ Vật Lý Ứng Dụng BAS1270</div>
+                        <div style={{ color: "rgba(255,255,255,.85)", fontSize: 13 }}>Câu {current + 1} / {total} · ✓ {score}</div>
+                    </div>
+                    <div style={{ background: "#e5e7eb", borderRadius: 99, height: 6, marginBottom: 16 }}>
+                        <div style={{ background: "linear-gradient(90deg,#1e3a5f,#2563eb)", height: 6, borderRadius: 99, width: `${(current / total) * 100}%`, transition: "width .3s" }} />
+                    </div>
+                    <div style={{ background: "#eff6ff", borderRadius: 12, padding: 18, marginBottom: 14, borderLeft: "4px solid #2563eb" }}>
+                        <p style={{ margin: 0, fontWeight: 600, color: "#1e3a5f", fontSize: 15, lineHeight: 1.6 }}>{q.q}</p>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 9, marginBottom: 16 }}>
+                        {q.opts.map((opt, i) => {
+                            let bg = "white", border = "2px solid #e5e7eb", color = "#374151";
+                            if (selected === i && !submitted) { bg = "#dbeafe"; border = "2px solid #3b82f6"; }
+                            if (submitted) {
+                                if (i === q.ans) { bg = "#dcfce7"; border = "2px solid #22c55e"; color = "#166534"; }
+                                else if (i === selected && i !== q.ans) { bg = "#fee2e2"; border = "2px solid #ef4444"; color = "#991b1b"; }
+                            }
+                            return (
+                                <button key={i} onClick={() => handleSelect(i)} style={{ textAlign: "left", padding: "11px 14px", borderRadius: 10, border, background: bg, color, cursor: submitted ? "default" : "pointer", fontSize: 14, lineHeight: 1.5, display: "flex", gap: 10, alignItems: "flex-start", transition: "all .15s" }}>
+                                    <span style={{ fontWeight: 700, flexShrink: 0, minWidth: 20 }}>{String.fromCharCode(65 + i)}.</span>
+                                    <span>{opt}</span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                    {submitted && (
+                        <div style={{ background: selected === q.ans ? "#f0fdf4" : "#fff7ed", border: `1px solid ${selected === q.ans ? "#86efac" : "#fdba74"}`, borderRadius: 10, padding: 14, marginBottom: 14, fontSize: 14, color: "#374151", lineHeight: 1.6 }}>
+                            <strong>{selected === q.ans ? "✅ Chính xác!" : "❌ Chưa đúng!"}</strong><br/>{q.explain}
+                        </div>
+                    )}
+                    {!submitted ? (
+                        <button onClick={handleSubmit} disabled={selected === null} style={{ width: "100%", padding: 13, background: selected === null ? "#9ca3af" : "linear-gradient(135deg,#1e3a5f,#2563eb)", color: "white", border: "none", borderRadius: 10, fontSize: 15, cursor: selected === null ? "not-allowed" : "pointer", fontWeight: 700 }}>Xác nhận đáp án</button>
+                    ) : (
+                        <button onClick={handleNext} style={{ width: "100%", padding: 13, background: "linear-gradient(135deg,#1e3a5f,#2563eb)", color: "white", border: "none", borderRadius: 10, fontSize: 15, cursor: "pointer", fontWeight: 700 }}>{current + 1 >= total ? "Xem kết quả 🎓" : "Câu tiếp theo →"}</button>
+                    )}
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<PhysicsQuiz />);
+    </script>
+</body>
+</html>
